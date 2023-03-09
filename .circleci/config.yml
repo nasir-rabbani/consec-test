@@ -5,22 +5,28 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  say-hello:
+  consec-image:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
-    docker:
-      - image: cimg/base:stable
+    machine:
+      image: ubuntu-2004:202010-01
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
-      - checkout
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "Download TCS CLI"
+          command: >-
+              wget https://staging.tenable.com/downloads/api/v2/pages/tenable-cs/files/tenable.cs-cli_latest-71426e5-preview_Linux_x86_64.tar.gz &&
+              file_name=`echo https://staging.tenable.com/downloads/api/v2/pages/tenable-cs/files/tenable.cs-cli_latest-71426e5-preview_Linux_x86_64.tar.gz | cut -f10 -d "/"` &&
+              tar -xf $file_name && chmod 777 tcs &&
+              ./tcs --help
+      - run:
+          name: "TCS Help"
+          command: "./tcs --help"
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  say-hello-workflow:
+  consec-workflow:
     jobs:
-      - say-hello
+      - consec-image
