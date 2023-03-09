@@ -16,13 +16,23 @@ jobs:
       - run:
           name: "Download TCS CLI"
           command: >-
-              wget https://staging.tenable.com/downloads/api/v2/pages/tenable-cs/files/tenable.cs-cli_latest-71426e5-preview_Linux_x86_64.tar.gz &&
-              file_name=`echo https://staging.tenable.com/downloads/api/v2/pages/tenable-cs/files/tenable.cs-cli_latest-71426e5-preview_Linux_x86_64.tar.gz | cut -f10 -d "/"` &&
-              tar -xf $file_name && chmod 777 tcs &&
-              ./tcs --help
+              wget $TCS_CLI_DOWNLOAD_URL &&
+              file_name=`echo $TCS_CLI_DOWNLOAD_URL | cut -f10 -d "/"` &&
+              tar -xf $file_name && chmod 777 tcs
       - run:
           name: "TCS Help"
           command: "./tcs --help"
+      - run:
+          name: "Pull Image"
+          command: "docker pull consul:1.13.6"
+      - run:
+          name: "TCS Image Scan"
+          command: "./tcs scan -t=container-image --image=docker-daemon:consul:1.13.6 --wait --poll 15 --timeout 600 --appurl $TCS_URL --token $TCS_TOKEN --project $PROJECT -l debug"
+      - run:
+          name: "Report File"
+          command: >-
+              ls ./report
+              cat ./report/tcs_image_scan_${PROJECT}.json
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
