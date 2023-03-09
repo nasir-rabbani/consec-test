@@ -1,2 +1,2 @@
-# consec-test circle-ci
+# consec scan single image circle-ci
 
