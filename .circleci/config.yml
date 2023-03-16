@@ -31,8 +31,7 @@ jobs:
       - run:
           name: "Report File"
           command: >-
-              ls ./report &&
-              cat ./report/tcs_image_scan_61f10df9-72b5-4431-a729-bae22b5f78d3.json
+              ls ./report
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
