@@ -27,12 +27,12 @@ jobs:
           command: "docker pull consul:1.13.6"
       - run:
           name: "TCS Image Scan"
-          command: "./tcs scan -t=container-image --image=docker-daemon:consul:1.13.6 --wait --poll 15 --timeout 600 --appurl $TCS_URL --token $TCS_TOKEN --project $PROJECT -l debug"
+          command: "./tcs scan -t=container-image --image=docker-daemon:consul:1.13.6 --wait --poll 15 --timeout 600 --appurl https://us-2b.svc.nessus.org --token $TCS_TOKEN --project 61f10df9-72b5-4431-a729-bae22b5f78d3 -l debug"
       - run:
           name: "Report File"
           command: >-
               ls ./report
-              cat ./report/tcs_image_scan_${PROJECT}.json
+              cat ./report/tcs_image_scan_61f10df9-72b5-4431-a729-bae22b5f78d3.json
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
