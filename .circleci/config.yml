@@ -31,7 +31,7 @@ jobs:
       - run:
           name: "Report File"
           command: >-
-              ls ./report
+              ls ./report &&
               cat ./report/tcs_image_scan_61f10df9-72b5-4431-a729-bae22b5f78d3.json
 
 # Invoke jobs via workflows
