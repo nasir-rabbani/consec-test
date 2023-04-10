@@ -14,6 +14,9 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - run:
+          name: "Build Image"
+          command: "ls && docker build -t getting-started:new ."
+      - run:
           name: "Download TCS CLI"
           command: >-
               wget $TCS_CLI_DOWNLOAD_URL &&
@@ -22,12 +25,10 @@ jobs:
       - run:
           name: "TCS Help"
           command: "./tcs --help"
-      - run:
-          name: "Build Image"
-          command: "ls && docker build -t getting-started:new ."
+
       - run:
           name: "TCS Image Scan"
-          command: "./tcs scan -t=container-image --image=docker-daemon:getting-started:new --wait --poll 15 --timeout 600 --appurl https://us-2b.svc.nessus.org --token $TCS_TOKEN --project 61f10df9-72b5-4431-a729-bae22b5f78d3 -l debug"
+          command: "./tcs scan -t=container-image --image=docker-daemon:getting-started:new --wait --poll 15 --timeout 600 --token $TCS_TOKEN --project 61f10df9-72b5-4431-a729-bae22b5f78d3 -l debug"
       - run:
           name: "Report File"
           command: >-
