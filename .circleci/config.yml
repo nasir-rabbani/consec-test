@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: "Build Image"
-          command: "pwd && ls && docker build -t getting-started:new ."
+          command: "docker build -t getting-started:new ."
       - run:
           name: "Download TCS CLI"
           command: >-
@@ -29,7 +29,7 @@ jobs:
 
       - run:
           name: "TCS Image Scan"
-          command: "./tcs scan -t=container-image --image=docker-daemon:getting-started:new --wait --poll 15 --appurl https://us-2b.svc.nessus.org --timeout 600 --token $TCS_TOKEN --project 61f10df9-72b5-4431-a729-bae22b5f78d3 -l debug"
+          command: "./tcs scan -t=container-image --image=docker-daemon:getting-started:new --wait --poll 15 --timeout 600 --token $TCS_TOKEN --project 451eb51d-9068-46fa-965b-e95735dc7769 -l debug"
       - run:
           name: "Report File"
           command: >-
