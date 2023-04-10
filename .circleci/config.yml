@@ -24,10 +24,10 @@ jobs:
           command: "./tcs --help"
       - run:
           name: "Pull Image"
-          command: "docker pull consul:1.13.6"
+          command: "docker build -t getting-started:new ."
       - run:
           name: "TCS Image Scan"
-          command: "./tcs scan -t=container-image --image=docker-daemon:consul:1.13.6 --wait --poll 15 --timeout 600 --appurl https://us-2b.svc.nessus.org --token $TCS_TOKEN --project 61f10df9-72b5-4431-a729-bae22b5f78d3 -l debug"
+          command: "./tcs scan -t=container-image --image=docker-daemon:getting-started:new --wait --poll 15 --timeout 600 --appurl https://us-2b.svc.nessus.org --token $TCS_TOKEN --project 61f10df9-72b5-4431-a729-bae22b5f78d3 -l debug"
       - run:
           name: "Report File"
           command: >-
