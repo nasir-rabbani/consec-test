@@ -18,14 +18,10 @@ jobs:
       - run:
           name: "TCS Version"
           command: "./tcs version"
-
       - run:
           name: "TCS Image Scan"
-          command: "./tcs scan -t=container-image --image=docker-daemon:getting-started:new --wait"
-      - run:
-          name: "Report File"
-          command: >-
-              ls ./report
+          command: "./tcs consec image getting-started:new --wait"
+
 workflows:
   consec-workflow:
     jobs:
